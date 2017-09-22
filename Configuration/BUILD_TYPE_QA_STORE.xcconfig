@@ -1,0 +1,10 @@
+//
+//  BUILD_TYPE_QA_STORE.xcconfig
+//  BaseProject
+//
+
+#include "BUILD_TYPE_QA.xcconfig"
+
+// CODE SIGNING FOR Waitrose
+CODE_SIGN_IDENTITY                                                              = iPhone Distribution: BJSS Limited
+

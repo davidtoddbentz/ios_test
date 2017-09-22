@@ -1,0 +1,24 @@
+//
+//  SYST_DEVELOPER.xcconfig
+//  BaseProject
+//
+//  Created by BJSS on 11/11/2015.
+//  Copyright © 2016 BJSS Limited. All rights reserved.
+//
+
+// POD NAME
+#include "Pods/Target Support Files/Pods-MyMapp/Pods-MyMapp.dev-developer.xcconfig"
+
+
+// SERVER CONFIGURATION
+#include "DEV_COMMON.xcconfig"
+
+// COMMON CONFIGURATION
+#include "../COMMON.xcconfig"
+
+// BUILD TYPE CONFIGURATION
+#include "../BUILD_TYPE_DEVELOPER_STORE.xcconfig"
+
+// PROVISIONING PROFILE
+PROVISIONING_PROFILE                                                             = $(sigh_$(BUNDLE_IDENTIFIER)_development)
+PROVISIONING_PROFILE_SPECIFIER                                                   = match Development $(BUNDLE_IDENTIFIER)

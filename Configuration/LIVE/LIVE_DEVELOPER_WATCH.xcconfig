@@ -1,0 +1,25 @@
+//
+//  LIVE_DEVELOPER.xcconfig
+//  BaseProject
+//
+//  Created by BJSS on 11/11/2015.
+//  Copyright © 2016 BJSS Limited. All rights reserved.
+//
+
+// POD NAME
+#include "Pods/Target Support Files/Pods-MyMappWatch/Pods-MyMappWatch.live-developer.xcconfig"
+
+// SERVER CONFIGURATION
+#include "LIVE_COMMON.xcconfig"
+
+// COMMON CONFIGURATION
+#include "../COMMON.xcconfig"
+
+// WATCH_COMMON CONFIGURATION
+#include "../COMMON_WATCH.xcconfig"
+
+// BUILD TYPE CONFIGURATION
+#include "../BUILD_TYPE_DEVELOPER_STORE.xcconfig"
+
+//:configuration = Automatic
+PROVISIONING_PROFILE                                                            = // SET KEY HERE -> f526c45c-efb3-4610-8bef-8bc60c349b06

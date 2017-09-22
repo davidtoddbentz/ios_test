@@ -1,0 +1,518 @@
+require('dotenv')
+Dotenv.load '../.env'
+
+# Fix the fastlane version so that we don't get any surprises while deploying.
+fastlane_version '1.48.0'
+
+# BUNDLE IDENTIFIERS
+ENV['APP_IDENTIFIER_DEV'] 			= 'com.bjss.USAFundsPOC-DEV'
+ENV['APP_IDENTIFIER'] 				= 'com.bjss.USAFundsPOC'
+ENV['APP_IDENTIFIER_STORE'] 			= 'com.bjss.USAFundsPOCs'
+ENV['APP_IDENTIFIER_DEV_NOTIFICATION'] 		= 'com.bjss.USAFundsPOC-DEV.notification'
+ENV['APP_IDENTIFIER_NOTIFICATION'] 		= 'com.bjss.USAFundsPOC.notification'
+ENV['APP_IDENTIFIER_STORE'] 			= 'com.bjss.USAFundsPOCs'
+
+# APPLE ACCOUNTS
+ENV['APPLE_ACCOUNT_ENT']			= 'mobile@bjss.com'
+ENV['APPLE_ACCOUNT_STORE']			= 'mobile.developer@bjss.com'
+
+ENV['APP_NAME']					= 'USAFundsPOC'
+#############################
+### Environment variables ###
+#############################
+
+# LOCATION OF QA Project in respect of root of the Base Project
+if ! ENV['QA_BASE']
+	ENV['QA_BASE']		     = '../QA'
+end
+
+# Set the following environment variables if you want to run tests on the
+# AWS device farm
+
+#BJSS MOBILE SLACK KEY
+
+# APPLE ACCOUNTS
+ENV['APPLE_ACCOUNT_ENT']			= 'mobile@bjss.com'
+ENV['APPLE_ACCOUNT_STORE']			= 'mobile.developer@bjss.com'
+
+ENV['APP_NAME']					= 'USAFundsPOC'
+#############################
+### Environment variables ###
+#############################
+
+# LOCATION OF QA Project in respect of root of the Base Project
+if ! ENV['QA_BASE']
+	ENV['QA_BASE']		     = '../QA'
+end
+
+# Set the following environment variables if you want to run tests on the
+# AWS device farm
+
+#BJSS MOBILE SLACK KEY
+#ENV['SLACK_URL'] = 'https://hooks.slack.com/services/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'
+
+# REQUIRED ENVIRONMENT VARIABLES
+# ------------------------------
+# FL_AWS_DEVICE_FARM_NAME                         Name of Device Farm Project
+# FL_AWS_DEVICE_FARM_POOL                         Device Pool to Test Against
+# AWS_ACCESS_KEY_ID	     		        AWS_ACCESS_KEY
+# AWS_SECRET_ACCESS_KEY				AWS_SECRET_ACCESS_KEY
+# MATCH_PASSWORD_DEV				Encryption Key for match certificates (Development Certificates)
+# MATCH_PASSWORD_LIVE				Encryption Key for match certificates (Live Certificates)
+
+# HARD CODED AS THIS IS THE ONLY DEVICE FARM AT THE MOMENT
+ENV['AWS_REGION']            = 'us-west-2'
+
+###########################
+### BUILD AND UNIT TEST ###
+###########################
+
+
+desc "Setup xCode - Removes Fix Button"
+lane :xcode do
+  install_xcode_plugin(github: 'https://github.com/FixIssue/FixCode')
+end
+
+desc "Download Development profiles"
+lane :downloadDevProfiles do
+  if ENV['MATCH_PASSWORD_DEV']
+  	ENV['MATCH_PASSWORD'] = ENV[“MATCH_PASSWORD_DEV”]
+  end
+  match(type: 			"development",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesDev.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_DEV'],
+	readonly: 		true,
+	force_for_new_devices: false)
+  match(type: 			"development",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesDev.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER'],
+	readonly: 		true,
+	force_for_new_devices: false)
+  match(type: 			"development",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesDev.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_NOTIFICATION'],
+	readonly: 		true,
+	force_for_new_devices: false)
+  match(type: 			"development",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesDev.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_DEV_NOTIFICATION'],
+	readonly: 		true,
+	force_for_new_devices: false)
+end
+
+desc "Update Development profiles (Requires Write Peremission to Apple Developer Account)"
+lane :updateDevProfiles do
+  if ENV['MATCH_PASSWORD_DEV']
+  	ENV['MATCH_PASSWORD'] = ENV[“MATCH_PASSWORD_DEV”]
+  end
+  match(type: 			"development",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesDev.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_DEV'],
+	readonly: 		false,
+	force_for_new_devices: true)
+  match(type: 			"development",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesDev.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER'],
+	readonly: 		false,
+	force_for_new_devices: true)
+  match(type: 			"development",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesDev.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_DEV_NOTIFICATION'],
+	readonly: 		false,
+	force_for_new_devices: true)
+  match(type: 			"development",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesDev.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_NOTIFICATION'],
+	readonly: 		false,
+	force_for_new_devices: true)
+end
+
+desc "Download Enterprise (QA & Live) profiles"
+lane :downloadLiveProfiles do
+  ENV['MATCH_FORCE_ENTERPRISE'] = '1'
+
+  if ENV['MATCH_PASSWORD_LIVE']
+  	ENV['MATCH_PASSWORD'] = ENV[“MATCH_PASSWORD_LIVE”]
+  end
+
+  match(type: 			"enterprise",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesLive.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_DEV'],
+	readonly: 		true,
+	force_for_new_devices: false)
+  match(type: 			"enterprise",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesLive.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER'],
+	readonly: 		true,
+	force_for_new_devices: false)
+  match(type: 			"enterprise",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesLive.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_DEV_NOTIFICATION'],
+	readonly: 		true,
+	force_for_new_devices: false)
+  match(type: 			"enterprise",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesLive.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_NOTIFICATION'],
+	readonly: 		true,
+	force_for_new_devices: false)
+end
+
+
+desc "Update Enterprise (QA & Live) profiles (Requires Write Peremission to Apple Developer Account)"
+lane :updateLiveProfiles do
+  ENV['MATCH_FORCE_ENTERPRISE'] = '1'
+
+  if ENV['MATCH_PASSWORD_LIVE']
+  	ENV['MATCH_PASSWORD'] = ENV[“MATCH_PASSWORD_LIVE”]
+  end
+
+  match(type: 			"enterprise",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesLive.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_DEV'],
+	readonly: 		false,
+	force_for_new_devices: true)
+  match(type: 			"enterprise",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesLive.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER'],
+	readonly: 		false,
+	force_for_new_devices: true)
+  match(type: 			"enterprise",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesLive.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_DEV_NOTIFICATION'],
+	readonly: 		false,
+	force_for_new_devices: true)
+  match(type: 			"enterprise",
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	git_url:         	"git@github.com:bjss/bjssMobileCertificatesLive.git",
+	git_branch:		"enterpriseAccount",
+	app_identifier: 	ENV['APP_IDENTIFIER_NOTIFICATION'],
+	readonly: 		false,
+	force_for_new_devices: true)
+end
+
+desc "Create Enterprise Application"
+lane :createEntApplication do
+  produce(app_name:             ENV['APP_NAME'],
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	skip_itc:		true,
+        app_identifier:         ENV['APP_IDENTIFIER'])
+  produce(app_name:             ENV['APP_NAME'],
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	skip_itc:		true,
+        app_identifier:         ENV['APP_IDENTIFIER_DEV'])
+  produce(app_name:             ENV['APP_NAME'],
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	skip_itc:		true,
+        app_identifier:         ENV['APP_IDENTIFIER_DEV_NOTIFICATION'])
+  produce(app_name:             ENV['APP_NAME'],
+	username:		ENV['APPLE_ACCOUNT_ENT'],
+	skip_itc:		true,
+        app_identifier:         ENV['APP_IDENTIFIER_NOTIFICATION'])
+end
+
+desc "Create Store Application"
+lane :createStoreApplication do
+  produce(app_name:             ENV['APP_NAME'],
+	username:		ENV['APPLE_ACCOUNT_STORE'],
+        app_identifier:         ENV['APP_IDENTIFIER_STORE'])
+end
+
+desc "Download Store profiles"
+lane :downloadStoreProfiles do
+  if ENV['MATCH_PASSWORD_STORE']
+        ENV['MATCH_PASSWORD'] = ENV[“MATCH_PASSWORD_STORE”]
+  end
+
+  match(type:                   "appstore",
+	username:		ENV['APPLE_ACCOUNT_STORE'],
+        git_url:                "git@github.com:bjss/bjssMobileCertificatesLive.git",
+        git_branch:             "storeAccount",
+        app_identifier:         ENV['APP_IDENTIFIER_STORE'],
+        readonly:               true,
+        force_for_new_devices: false)
+end
+
+desc "Update Store profiles (Requires Write Peremission to Apple Developer Account)"
+lane :updateStoreProfiles do
+
+  if ENV['MATCH_PASSWORD_STORE']
+        ENV['MATCH_PASSWORD'] = ENV[“MATCH_PASSWORD_STORE”]
+  end
+
+  match(type:                   "appstore",
+	username:		ENV['APPLE_ACCOUNT_STORE'],
+        git_url:                "git@github.com:bjss/bjssMobileCertificatesLive.git",
+        git_branch:             "storeAccount",
+        app_identifier:         ENV['APP_IDENTIFIER_STORE'],
+        readonly:               false,
+        force_for_new_devices: true)
+end
+
+
+desc "Generate Apple Style Documentation"
+lane :documentation do
+	jazzy
+end
+
+desc "Jenkins Unit Test, Appium Test and Run Sonar Report (Non-Swift Projects)"
+lane :jenkins do
+	test_unit
+	test_build_appium
+	test_api
+	code_analysis
+end
+
+desc "Jenkins Unit Test, Appium Test and Run Sonar Report (Swift Projects)"
+lane :jenkins_swift do
+	test_unit
+	test_build_appium
+	test_api
+	code_analysis_swift
+end
+
+desc "Build Application and Run Unit Tests"
+lane :test_unit do
+	unit_test
+end
+
+######################
+### ALL  TEST LANE ###
+######################
+desc "Build then run Appium Tests"
+lane :test_build_appium do
+	 ENV['APP_LOCATION'] = sh("cd .. && /usr/bin/xcodebuild -workspace DVSA_MOTH.xcworkspace  -scheme DEV-Developer   -sdk iphonesimulator -showBuildSettings   | grep CODESIGNING_FOLDER_PATH| sed 's/.*=//' | head -1 | sed 's/\\/DEV-.*iphonesimulator/\\/DEV-Developer-iphonesimulator/'")
+	cocoapods
+	 xcodebuild( workspace:  "DVSA_MOTH.xcworkspace",
+                    scheme:     "DEV-Developer",
+                    sdk:        "iphonesimulator"
+        )
+
+	sh 'cd .. && rm -fr AppiumBuild && mkdir AppiumBuild'
+	sh 'cd .. && mv $APP_LOCATION AppiumBuild'
+        appium_test
+end
+
+######################
+### ALL  TEST LANE ###
+######################
+desc "Run Appium Tests against previously built binary on simulator"
+lane :test_appium_simulator do
+        appium_test
+end
+
+desc "Run API Tests"
+lane :test_api do
+        api_test
+end
+
+##########################
+### CODE ANALYSIS LANE ###
+##########################
+desc "Run Static Code Analysis on Swift Codebase using fastlane actions"
+lane :code_analysis_swift_fastlane do
+	cocoapods
+    scan(
+                scheme: "DEV-Developer",
+                code_coverage: true,
+                derived_data_path: "./DerivedData",
+                output_directory: "./reports"
+        )
+
+    slather(
+                cobertura_xml: true,
+                jenkins: true,
+                scheme: "DEV-Developer",
+                build_directory: "./DerivedData",
+                output_directory: "./reports",
+                proj: "DVSA_MOTH.xcodeproj",
+                workspace: "DVSA_MOTH.xcworkspace"
+        )
+
+    sh  ("cd .. && lizard ./DVSA_MOTH -l swift --xml > ./reports/lizard-report.xml")
+
+    swiftlint(output_file: "./reports/swiftlint.txt", ignore_exit_status: true)
+
+    sonar
+end
+
+##########################
+### CODE ANALYSIS LANE ###
+##########################
+desc "Run Static Code Analysis on Swift Codebase"
+lane :code_analysis_swift do
+	swiftlint
+        sh 'cd .. && ./fastlane/scripts/run-sonar-swift.sh'
+end
+
+##########################
+### CODE ANALYSIS LANE ###
+##########################
+desc "Run Static Code Analysis"
+lane :code_analysis do
+        sh 'cd .. && ./fastlane/scripts/run-sonar.sh'
+end
+
+#####################
+### AWS TEST LANE ###
+#####################
+desc "Build ipa and run tests on AWS Device Farm (PAID SERVICE)"
+lane :test_appium_aws_device do
+  @slack_jenkins_job = 'build'
+  compile_ipa
+  compile_tests
+  upload      # Run the tests lane.
+end
+
+####################
+### BUILD LANES  ###
+####################
+desc "Build and Distribute DEV-QA  (via Crashlytics) "
+lane :build_dev_qa do
+	cocoapods
+	badge
+        gym(  scheme:                 'DEV-QA',
+                output_name:            'build',
+                use_legacy_build_api:   true
+        )
+	crashlytics(	api_token:	$Crashlytics_API,
+			build_secret:	$Crashlytics_SECRET,
+			notes_path: 	"./releaseNotes.txt",
+			groups:		$Crashlytics_DIST_DEV_QA
+	)
+end
+
+desc "Build and Distribute LIVE-QA  (via Crashlytics) "
+lane :build_live_qa do
+	cocoapods
+        gym(  scheme:                 'LIVE-QA',
+                output_name:            'build',
+                use_legacy_build_api:   true
+        )
+	crashlytics(	api_token:	$Crashlytics_API,
+			build_secret:	$Crashlytics_SECRET,
+			notes_path: 	"./releaseNotes.txt",
+			groups:		$Crashlytics_DIST_LIVE_QA
+	)
+end
+
+desc "Build STORE and UPLOAD to TestFlight"
+lane :build_store do
+        cocoapods
+        gym(  scheme:                 'LIVE-STORE',
+                output_name:            'build',
+                use_legacy_build_api:   true
+        )
+
+	pilot(
+		username:		ENV['APPLE_ACCOUNT_STORE'],
+		ipa:			'build.ipa')
+end
+
+
+#####################
+### PRIVATE LANES ###
+#####################
+
+private_lane :appium_test do
+	ENV['QA_LOCATION']           = sh("cd .. && ./fastlane/scripts/realpath $QA_BASE")
+	sh 'cd .. && sh ./fastlane/scripts/test_local.sh "$QA_LOCATION" "`./fastlane/scripts/realpath AppiumBuild/*.app`"'
+end
+
+private_lane :api_test do
+	ENV['QA_LOCATION']           = sh("cd .. && ./fastlane/scripts/realpath $QA_BASE")
+	sh 'cd .. && sh ./fastlane/scripts/test_local_api.sh "$QA_LOCATION" '
+end
+
+private_lane :unit_test do
+	cocoapods
+	scan(  scheme:                 'DEV-Developer',
+               derived_data_path:       'derivedData'
+        )
+end
+
+private_lane :compile_ipa do
+	cocoapods
+        gym(  scheme:                 'DEV-QA',
+		output_name:		'build',
+		use_legacy_build_api:	true
+        )
+
+end
+
+private_lane :compile_tests do
+	ENV['QA_LOCATION']           = sh("cd .. && ./fastlane/scripts/realpath $QA_BASE")
+	sh 'cd $QA_LOCATION && pwd && mvn clean package -DskipTests=true'
+end
+
+private_lane :upload do
+  ENV['TEST_LOCATION']         = ENV['QA_BASE'] + "/target/aws_tests.zip"
+  # Run the tests on the AWS device farm.
+  aws_device_farm(
+   binary_path:         'build.ipa',			# The ipa to test
+   test_binary_path:	ENV['TEST_LOCATION'],   # The Test file to Upload.
+   wait_for_completion: true                  		# optional, set to false when you want to skip waiting for test completion.
+  )
+end
+
+
+#################
+### Callbacks ###
+#################
+
+# Post a notification to Slack every time a lane was successful.
+after_all do |lane|
+  # slack(
+  #   message:          '#{lane[:name]} did run successful',
+  #   channel:          '#build',
+  #   success:           true,
+  #   default_payloads: [:lane, :test_result],
+  #   attachment_properties: {
+  #     title:      @slack_jenkins_job
+  #   }
+  # )
+  clean_build_artifacts
+end
+
+# When an error occurs we post a failure notification to Slack.
+error do |lane, exception|
+  # slack(
+  #   message:          exception.message,
+  #   channel:          '#build',
+  #   success:           false,
+  #   default_payloads: [:lane, :test_result],
+  #   attachment_properties: {
+  #     title:      @slack_jenkins_job
+  #   }
+  # )
+  clean_build_artifacts
+end

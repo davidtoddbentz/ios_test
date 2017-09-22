@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Ubuntu-Bold.ttf">
+            <string>Ubuntu-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FillView" customModule="USAFunds" customModuleProvider="target">
+            <connections>
+                <outlet property="completedBar" destination="eay-wD-31T" id="vNj-Xj-sgd"/>
+                <outlet property="remainingBar" destination="DaV-vc-CE1" id="zIe-Cb-lZx"/>
+                <outlet property="titleLabel" destination="Mj1-wc-0p9" id="eKh-22-qj6"/>
+                <outlet property="valueLabel" destination="B8M-EG-T5y" id="kOg-6P-b9o"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Qw2-gu-yLP"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="136" height="41"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="1vP-aF-p2L">
+                    <rect key="frame" x="0.0" y="0.0" width="136" height="20.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Employment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mj1-wc-0p9">
+                            <rect key="frame" x="0.0" y="0.0" width="72.5" height="20.5"/>
+                            <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="33k" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="B8M-EG-T5y">
+                            <rect key="frame" x="105" y="0.0" width="31" height="20.5"/>
+                            <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="18"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DaV-vc-CE1">
+                    <rect key="frame" x="0.0" y="34" width="136" height="7"/>
+                    <color key="backgroundColor" red="0.84696626663208008" green="0.84711211919784546" blue="0.84695702791213989" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="7" id="O3h-fP-iiP"/>
+                    </constraints>
+                </view>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eay-wD-31T">
+                    <rect key="frame" x="0.0" y="34" width="95" height="7"/>
+                    <color key="backgroundColor" red="0.01903118379" green="0.84920674559999998" blue="0.39499759670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="95" id="nWy-73-BMe"/>
+                        <constraint firstAttribute="height" constant="7" id="s6n-9i-LSX"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="DaV-vc-CE1" secondAttribute="bottom" id="1Mj-cI-Bn2"/>
+                <constraint firstItem="1vP-aF-p2L" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="3Sd-X9-ZQE"/>
+                <constraint firstItem="1vP-aF-p2L" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="9Ht-61-ISA"/>
+                <constraint firstItem="1vP-aF-p2L" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VCB-nc-6ed"/>
+                <constraint firstItem="eay-wD-31T" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ydu-sp-twk"/>
+                <constraint firstItem="DaV-vc-CE1" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="cWK-5O-rJn"/>
+                <constraint firstAttribute="bottom" secondItem="eay-wD-31T" secondAttribute="bottom" id="i0H-IH-r4E"/>
+                <constraint firstItem="DaV-vc-CE1" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="s4c-gq-4E6"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-111" y="-165.5"/>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,43 @@
+//
+//  LIVE_COMMON.xcconfig
+//  BaseProject
+//
+//  Created by BJSS on 11/11/2015.
+//  Copyright © 2016 BJSS Limited. All rights reserved.
+//
+
+// EXTENDED NAME
+EXT_NAME                                                                        =
+
+// ENVIRONMENT ABREVIATION
+ENV_ABR                                                                         = LIVE
+
+// PUSH NOTIFICATION
+PUSH_NOTIFICATION_KEY                                                           = B7D5F-50778
+
+// DROPEVENT KEY
+//DROP_EVENT_KEY                                                                  = 575fc6b50d98485db304c967
+
+// PERFORMANCE MONITORING - NEW RELIC
+// NEW_RELIC_KEY                                                                   = AAf4e9e2e141e2a2282a79626227535edac0f8ec7c
+
+// ANALYTICS - APPSEE
+// APPSEE_KEY                                                                      = d16a80bf2a3947a8a387c71b2c20c9e3
+
+// MixPanel Key
+// MIXPANEL_KEY                                                                    = 50f3b37e61a242427c3389d15b7fc7c8
+
+// ENVIRONMENT PREPROCESSOR DEFINITIONS
+ENV_GCC_PREPROCESSOR_DEFINITIONS                                                = LIVE
+ENV_SWIFT_FLAGS                                                                 = -DLIVE
+
+// FIREBASE CONFIGURATION
+ENV_googleAppID                                                                 = 1:824679872663:ios:fc4c7babac5f8779
+ENV_GCMSenderID                                                                 = 824679872663
+ENV_APIKey                                                                      = AIzaSyBw5Slnx2hf4MBsJvgkKGge6NyRnp8U3Jg
+ENV_clientID                                                                    = 824679872663-07v8q48cqrd2k3p74rf5rsjpk1eirj68.apps.googleusercontent.com
+ENV_trackingID                                                                  =
+ENV_androidClientID                                                             =
+ENV_databaseURL                                                                 = https:$(SIMPLE_SLASH)/usafundspoc.firebaseio.com
+ENV_storageBucket                                                               = usafundspoc.appspot.com
+ENV_deepLinkURLScheme                                                           =

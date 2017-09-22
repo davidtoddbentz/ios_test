@@ -1,0 +1,27 @@
+//
+//  SYST_QA.xcconfig
+//  BaseProject
+//
+//  Created by BJSS on 11/11/2015.
+//  Copyright © 2016 BJSS Limited. All rights reserved.
+//
+
+// POD NAME
+#include "Pods/Target Support Files/Pods-MyMappWatch Extension/Pods-MyMappWatch Extension.dev-qa.xcconfig"
+
+// SERVER CONFIGURATION
+#include "DEV_COMMON.xcconfig"
+
+// COMMON CONFIGURATION
+#include "../COMMON.xcconfig"
+
+// WATCH_EXT_COMMON CONFIGURATION
+#include "../COMMON_WATCH_EXT.xcconfig"
+
+// BUILD TYPE CONFIGURATION
+#include "../BUILD_TYPE_QA_ENTERPRISE.xcconfig"
+
+// PROVISIONING PROFILE (BJSS Enterprise In House)
+PROVISIONING_PROFILE                                                            = // SET KEY HERE -> 85454c51-576c-4f44-bf58-5b5ab6359805
+PROVISIONING_PROFILE_SPECIFIER                                                   = // SET KEY HERE 
+

@@ -1,0 +1,20 @@
+{
+  "stickers" : [
+    {
+      "filename" : "ThumbDown 136x136 2x.sticker"
+    },
+    {
+      "filename" : "ThumbMiddle 136x136 2x.sticker"
+    },
+    {
+      "filename" : "ThumbUp 136x136 2x.sticker"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  },
+  "properties" : {
+    "grid-size" : "regular"
+  }
+}

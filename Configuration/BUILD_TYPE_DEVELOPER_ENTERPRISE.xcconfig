@@ -1,0 +1,11 @@
+//
+//  BUILD_TYPE_DEVELOPER_ENTERPRISE.xcconfig
+//  BaseProject
+//
+
+#include "BUILD_TYPE_DEVELOPER.xcconfig"
+
+// CODE SIGNING - Automatic
+CODE_SIGN_IDENTITY                                                               = iPhone Developer: James Whitehouse (ZJDH45VVT6)
+
+
