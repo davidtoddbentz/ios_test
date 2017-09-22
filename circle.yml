@@ -1,8 +1,6 @@
 machine:
   xcode:
     version: 8.0
-  services:
-    - docker
 test:
   override:
     - set -o pipefail &&
